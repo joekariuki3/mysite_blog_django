@@ -10,6 +10,19 @@
   font-size: 36px;
   text-decoration: none;
 }
+
+.page-header a .fa{
+    font-size:35px;
+    color:#ffffff;
+    float: right;
+}
+
+.page-header a .fa:hover{
+    color:#ffffffaf;
+
+}
+
+
 .content {
   margin-left: 40px;
 }
@@ -39,6 +52,7 @@ h4 {
     width: 100%;
 }
 
-.post-form-blog .btn-primary{
+.post-form-blog .btn-primary {
 float: right;
 }
+
