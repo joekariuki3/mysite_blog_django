@@ -34,3 +34,11 @@ h4 {
 .post h1 a:visited {
   color;
 }
+
+.post-form-blog textarea {
+    width: 100%;
+}
+
+.post-form-blog .btn-primary{
+float: right;
+}
