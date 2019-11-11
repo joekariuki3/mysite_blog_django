@@ -30,6 +30,7 @@ LOGIN_URL = '/accounts/login'
 
 
 LOGIN_REDIRECT_URL = 'post_list'
+LOGOUT_REDIRECT_URL = 'post_list'
 
 
 # Application definition

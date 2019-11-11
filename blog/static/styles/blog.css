@@ -11,13 +11,15 @@
   text-decoration: none;
 }
 
-.page-header a .fa, .fas{
+.top-menu{
     font-size:35px;
     color:#ffffff;
     float: right;
+    text-decoration:none;
+    margin-right:20px;
 }
 
-.page-header a .fa:hover{
+.top-menu:hover{
     color:#ffffffaf;
 
 }
