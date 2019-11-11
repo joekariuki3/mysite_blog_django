@@ -11,7 +11,7 @@
   text-decoration: none;
 }
 
-.page-header a .fa{
+.page-header a .fa, .fas{
     font-size:35px;
     color:#ffffff;
     float: right;
