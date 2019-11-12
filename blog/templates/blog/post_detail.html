@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load markdownify %}
 {% block title%}  {{post.title}}  {% endblock%}
 {% block content%}
 {% if post.published_date %}
@@ -6,7 +7,7 @@
   <div class="date">
     <p>Published: {{ post.published_date }}</p>
   </div>
-  {% else %}s
+  {% else %}
   <a href="{% url 'post_publish' pk=post.pk %}" class="btn btn-primary">Publish</a>
 
   {% endif %}
@@ -15,7 +16,7 @@
   {% endif %}
 
   <h1>{{ post.title }}</h1>
-  <p>{{ post.text | linebreaksbr }}</p>
+  <p>{{ post.text | markdown | safe }}</p>
   </div>
 <a href="{% url 'add_comment_to_post' pk=post.pk %}" class="btn btn-light" >Add Comment</a>
   <hr>
@@ -33,7 +34,7 @@
             {% endif %}
 
                 <strong><p> {{comment.author}} </p></strong>
-                <p> {{comment.text}} </p>
+                <p> {{comment.text | markdown | safe |linebreaksbr}} </p>
           </div>
       {% endif %}
       {% empty %}
