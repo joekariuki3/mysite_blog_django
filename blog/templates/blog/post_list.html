@@ -3,22 +3,21 @@
 {% block title%} My Blog {% endblock%}
 {% block content%}
 {% for post in posts %}
-<div class="post">
-  <div class="date">
-    <p>
-      <em> Published: {{ post.published_date }} </em>
-    </p>
-  </div>
-  <h1>
-    <a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
-  </h1>
-  <div>
-    <p>{{ post.text |markdown | safe| truncatechars:50| linebreaksbr }}</p>
-  </div>
+    <div class="post">
+      <div class="date">
+        <p><em> Published: {{ post.published_date }} </em></p>
+      </div>
 
-<div>
-  <a href="{% url 'post_detail' pk=post.pk%}">Comments: {{ post.approved_comments.count }}</a>
-</div>
+      <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
 
-</div>
+      <div>
+        <p>{{ post.text |markdown | safe| truncatechars:50| linebreaksbr }}</p>
+      </div>
+
+      <hr>
+
+      <div>
+        <a href="{% url 'post_detail' pk=post.pk%}">Comments: {{ post.approved_comments.count }}</a>
+      </div>
+    </div>
 {% endfor %} {% endblock %}

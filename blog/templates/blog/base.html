@@ -3,48 +3,115 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>{% block title%} {% endblock%} </title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"
     />
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
+          integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous"
+    />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="{% static 'styles/blog.css' %}" />
     <link rel="stylesheet" href="{% static 'styles/zenburn.css' %}">
+    <title>{% block title%} {% endblock%} </title>
   </head>
   <body>
-    <div class="page-header">
-      {% if user.is_authenticated %}
 
-      <a href="{% url 'post_draft_list' %}" class="top-menu"><i class="fas fa-pencil-ruler fa"></i>|</a>
-      <a href="{% url 'post_new'%}" class="top-menu"><i class="fa fa-plus"></i>|</a>
-      <a href="{% url 'logout'%}" class="top-menu"><i class="fas fa-sign-out-alt fa"></i>Logout |</a>
-      <p class="top-menu"> Hi,{{ user.username}}|</p>
+  <nav class="navbar sticky-top navbar-expand-md bg-light navbar-light  ">
+    <h1><a class="navbar-brand" href="{% url 'post_list'%}"><i class="fas fa-home"></i>Wise Programmer<br>Blog</a></h1>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse " id="collapsibleNavbar">
+    {% if user.is_authenticated %}
+
+      <ul class="navbar-nav">
 
 
+        <li class="nav-item">
 
-      {% else %}
-
-              <a href="{% url 'login'%}" class="top-menu"><i class="fas fa-sign-in-alt fa"></i> login</a>
+        </li>
+      </ul>
 
       {% endif %}
-      <h1><a href="{% url 'post_list'%}">Wise Programmer Blog</a></h1>
 
     </div>
+    <div class="collapse navbar-collapse " id="collapsibleNavbar">
+    <form class="form-inline my-2 my-lg-0  ">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search a post" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+    {% if user.is_authenticated %}
+  <div class="collapse navbar-collapse " id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'post_new'%}"><i class="fa fa-plus">Add post</i></a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="{% url 'post_draft_list' %}"><i class="fas fa-pencil-ruler fa">view drafts</i></a>
+      </li>
+        <li class="nav-item">
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <p class="nav-link"> <i class="far fa-user"></i><br>{{ user.username}}</p>
+              <div class="dropdown-divider"></div>
+              <a class="nav-link" href="{% url 'logout'%}"><i class="fas fa-sign-out-alt fa"></i>Logout</a>
+            </div>
+          </div>
+        </li>
+    </ul>
+  </div>
+
+    {% else %}
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'login'%}" ><i class="fas fa-sign-in-alt fa"></i> login</a>
+              <a class="dropdown-item" href="{% url 'signup'%}" ><i class="fas fa-user-plus"></i> Signup</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+      {% endif %}
+  </nav>
 
 
 
-    <div class="content container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="content container-fluid">
       <div class="row">
         <div class="col-md-8">
           {% block content%} {%endblock%}
