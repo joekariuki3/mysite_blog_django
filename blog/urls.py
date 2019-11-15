@@ -46,6 +46,10 @@ urlpatterns = [
     # 127.0.0.1:8000/signup ==> local
     # mydjangoblog.com/signup ==> online
     path('signup/', views.signup, name='signup'),
+
+    # 127.0.0.1:8000/search ==> local
+    # mydjangoblog.com/search ==> online
+    path('post/search/', views.search, name='search'),
 ]
 
 

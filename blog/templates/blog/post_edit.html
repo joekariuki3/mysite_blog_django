@@ -1,6 +1,13 @@
 {% extends 'blog/base.html' %}
 {% block title%} {{ post.title }} {% endblock%}
-
+{% block nav %}
+<li class="nav-item active">
+    <a class="nav-link" href="{% url 'post_new'%}"><i class="fa fa-plus">Add post</i></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'post_draft_list' %}"><i class="fas fa-pencil-ruler fa">view drafts</i></a>
+</li>
+{% endblock%}
 {% block content%}
 
 <h1>New post</h1>
