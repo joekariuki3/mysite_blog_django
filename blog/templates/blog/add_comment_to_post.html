@@ -1,13 +1,16 @@
 {% extends 'blog/base.html' %}
 {% block title%} Adding a Comment{% endblock%}
 {% block content%}
-
-<h1> Commenting on</h1>
-<em><p>{{ post.title }}</p></em>
-
-<form class="post-form-blog" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Post comment</button>
-</form>
+<div class="panel panel-default" style="width:400px; margin:0 auto;">
+    <div class="panel-body">
+        <h1 style=" font-family:sans-serif;"> Commenting on</h1>
+        <em><p>{{ post.title }}</p></em>
+        <hr>
+        <form class="post-form-blog" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Post comment</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

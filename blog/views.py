@@ -61,6 +61,7 @@ def post_new(request):
     else:
         form = PostForm()
         stuff_for_frontend = {'form': form}
+        messages.info(request, 'Add New Post')
     return render(request, 'blog/post_edit.html', stuff_for_frontend)
 
 @login_required
@@ -74,16 +75,18 @@ def post_edit(request, pk):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
+            messages.success(request, 'Post Updated')
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm(instance=post)
         stuff_for_frontend = {'form': form, 'post': post}
+        messages.info(request, 'Edit Post')
     return render(request, 'blog/post_edit.html', stuff_for_frontend)
 
 @login_required
 def post_draft_list(request):
     post = Post.objects.filter(published_date__isnull=True).order_by('-created_date')
-    stuff_for_frontend = {'posts': post }
+    stuff_for_frontend = {'posts': post}
     return render(request, 'blog/post_draft_list.html', stuff_for_frontend)
 
 @login_required

@@ -6,11 +6,14 @@ from crispy_forms.layout import Submit
 
 
 class PostForm(forms.ModelForm):
+    title = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post title'}))
+    text = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Post body'}))
     class Meta:
         model = Post
         fields = ('title', 'text')
 
 class CommentForm(forms.ModelForm):
+    text = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Comment'}))
     class Meta:
         model = Comment
         fields = ('text',)
