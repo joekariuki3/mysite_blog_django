@@ -13,23 +13,23 @@ from django.db.models import Q
 
 
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    posts = Post.objects.filter(
+        published_date__lte=timezone.now()).order_by('-published_date')
     stuff_for_frontend = {'posts': posts}
     return render(request, 'blog/post_list.html', stuff_for_frontend)
 
+
 def search(request):
-    request.start_time = time.time()
-    duration = time.time() - request.start_time
-    print(request.start_time)
-    print(time.time())
-    print(duration)
     user_query = str(request.GET.get('query', ''))
-    search_result = Post.objects.filter(title__contains=user_query).order_by('-published_date')
+    search_result = Post.objects.filter(
+        title__contains=user_query).order_by('-published_date')
     print(search_result)
     if search_result.count() == 0:
-        posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+        posts = Post.objects.filter(
+            published_date__lte=timezone.now()).order_by('-published_date')
         stuff_for_frontend = {'posts': posts}
-        messages.warning(request, 'Results containing ' + user_query + ' Not found, Sorry!')
+        messages.warning(request, 'Results containing ' +
+                         user_query + ' Not found, Sorry!')
         return render(request, 'blog/post_list.html', stuff_for_frontend)
 
     else:
@@ -39,13 +39,10 @@ def search(request):
         return render(request, 'blog/post_list.html', stuff_for_frontend)
 
 
-
-
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     stuff_for_frontend = {'post': post}
     return render(request, 'blog/post_detail.html', stuff_for_frontend)
-
 
 
 @login_required
@@ -56,13 +53,15 @@ def post_new(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            messages.info(request, 'Posted as Draft. Now Publish for Everyone to see')
+            messages.info(
+                request, 'Posted as Draft. Now Publish for Everyone to see')
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
         stuff_for_frontend = {'form': form}
         messages.info(request, 'Add New Post')
     return render(request, 'blog/post_edit.html', stuff_for_frontend)
+
 
 @login_required
 def post_edit(request, pk):
@@ -83,11 +82,14 @@ def post_edit(request, pk):
         messages.info(request, 'Edit Post')
     return render(request, 'blog/post_edit.html', stuff_for_frontend)
 
+
 @login_required
 def post_draft_list(request):
-    post = Post.objects.filter(published_date__isnull=True).order_by('-created_date')
+    post = Post.objects.filter(
+        published_date__isnull=True).order_by('-created_date')
     stuff_for_frontend = {'posts': post}
     return render(request, 'blog/post_draft_list.html', stuff_for_frontend)
+
 
 @login_required
 def post_publish(request, pk):
@@ -96,8 +98,9 @@ def post_publish(request, pk):
     messages.success(request, 'Post Published Successfully. Everyone can see')
     return redirect('post_detail', pk=pk)
 
+
 @login_required
-def post_delete(request,pk):
+def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
     messages.success(request, 'Post was Deleted Successfully')
@@ -118,13 +121,17 @@ def add_comment_to_post(request, pk):
     else:
         form = CommentForm()
 
-        return render(request, 'blog/add_comment_to_post.html', {'form':form, 'post': post})
+        return render(request, 'blog/add_comment_to_post.html', {'form': form, 'post': post})
+
+
 @login_required
 def comment_remove(request, pk):
-        comment = get_object_or_404(Comment, pk=pk)
-        comment.delete()
-        messages.success(request, 'Comment was Deleted Successfully')
-        return  redirect('post_detail', pk=comment.post.pk)
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    messages.success(request, 'Comment was Deleted Successfully')
+    return redirect('post_detail', pk=comment.post.pk)
+
+
 @login_required
 def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
@@ -132,15 +139,16 @@ def comment_approve(request, pk):
     messages.success(request, 'You Approved the Comment Successfully')
     return redirect('post_detail', pk=comment.post.pk)
 
+
 def signup(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
             new_user = User.objects.create_user(**form.cleaned_data)
             login(request, new_user)
-            messages.success(request, 'Welcome ' + new_user.username +' Your account ha been Created Successfully.')
+            messages.success(request, 'Welcome ' + new_user.username +
+                             ' Your account ha been Created Successfully.')
             return redirect('/')
     else:
         form = UserForm()
     return render(request, 'blog/signup.html', {'form': form})
-
