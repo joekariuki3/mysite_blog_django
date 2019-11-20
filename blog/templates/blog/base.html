@@ -62,7 +62,7 @@
             <div class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <p class="nav-link"> <i class="far fa-user"></i><br>{{ user.username}}</p>
+                <a class="nav-link" href="{% url 'profile'%}"><i class="far fa-user"></i><br>{{ user.username}}</a>
                 <div class="dropdown-divider"></div>
                 <a class="nav-link" href="{% url 'logout'%}"><i class="fas fa-sign-out-alt fa"></i>Logout</a>
               </div>

@@ -33,7 +33,8 @@ urlpatterns = [
 
     # 127.0.0.1:8000/post/3/comment ==> local
     # mydjangoblog.com/post/3/comment ==> online
-    path('post/<int:pk>/comment/', views.add_comment_to_post, name='add_comment_to_post'),
+    path('post/<int:pk>/comment/', views.add_comment_to_post,
+         name='add_comment_to_post'),
 
     # 127.0.0.1:8000/comment/3/remove ==> local
     # mydjangoblog.com/comment/3/remove ==> online
@@ -41,7 +42,8 @@ urlpatterns = [
 
     # 127.0.0.1:8000/comment/3/approve ==> local
     # mydjangoblog.com/comment/3/approve ==> online
-    path('comment/<int:pk>/approve/', views.comment_approve, name='comment_approve'),
+    path('comment/<int:pk>/approve/',
+         views.comment_approve, name='comment_approve'),
 
     # 127.0.0.1:8000/signup ==> local
     # mydjangoblog.com/signup ==> online
@@ -50,9 +52,8 @@ urlpatterns = [
     # 127.0.0.1:8000/search ==> local
     # mydjangoblog.com/search ==> online
     path('post/search/', views.search, name='search'),
+
+    # 127.0.0.1:8000/profile ==> local
+    # mydjangoblog.com/profile ==> online
+    path('profile/', views.userProfile, name='profile'),
 ]
-
-
-
-
-

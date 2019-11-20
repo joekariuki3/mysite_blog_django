@@ -5,18 +5,23 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib import messages
 import time
+from django.http import HttpResponse
 
 from .forms import PostForm, CommentForm, UserForm
 from .models import Post, Comment
 from django.db.models import Q
+from django.contrib.auth.models import User
 # Create your views here.
 
 
 def post_list(request):
+
     posts = Post.objects.filter(
         published_date__lte=timezone.now()).order_by('-published_date')
+    posts_count = str(posts.count())
+    print(posts_count)
     stuff_for_frontend = {'posts': posts}
-    return render(request, 'blog/post_list.html', stuff_for_frontend)
+    return render(request, 'blog/post_list.html', stuff_for_frontend, {'posts_count': posts_count})
 
 
 def search(request):
@@ -72,7 +77,7 @@ def post_edit(request, pk):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.published_date = timezone.now()
+            post.edited_date = timezone.now()
             post.save()
             messages.success(request, 'Post Updated')
             return redirect('post_detail', pk=post.pk)
@@ -152,3 +157,13 @@ def signup(request):
     else:
         form = UserForm()
     return render(request, 'blog/signup.html', {'form': form})
+
+
+def userProfile(request):
+    profile = request.user
+    user_pk = User.objects.get(username=profile).pk
+    #user_posts = [Post.objects.get(author=profile)]
+    print(user_pk)
+    # print(user_posts)
+
+    return render(request, 'blog/user_profile.html', {'profile': profile})

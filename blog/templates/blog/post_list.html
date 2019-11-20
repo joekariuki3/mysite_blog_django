@@ -1,51 +1,72 @@
-{% extends 'blog/base.html' %}
-{% load markdownify %}
-{% block title%} My Blog {% endblock%}
-{% block nav %}
+{% extends 'blog/base.html' %} {% load markdownify %} {% block title%} My Blog
+{% endblock%} {% block nav %}
 <li class="nav-item">
-    <a class="nav-link" href="{% url 'post_new'%}"><i class="fa fa-plus">Add post</i></a>
+  <a class="nav-link" href="{% url 'post_new'%}"
+    ><i class="fa fa-plus">Add post</i></a
+  >
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="{% url 'post_draft_list' %}"><i class="fas fa-pencil-ruler fa">view drafts</i></a>
+  <a class="nav-link" href="{% url 'post_draft_list' %}"
+    ><i class="fas fa-pencil-ruler fa">view drafts</i></a
+  >
 </li>
-{% endblock%}
-{% block content%}
+{% endblock%} {% block content%} 
+
+{% if posts%}
 {% for post in posts %}
-    <div class="post">
-      <div class="date">
-        <p><em> Published: {{ post.published_date }} </em></p>
-      </div>
+<div class="post">
+  <div class="date">
+    <p><em> Published: {{ post.published_date }} </em></p>
+    {% if post.edited_date%}
+    <p><em> Edited: {{ post.edited_date }} </em></p>
+    {% endif%}
+  </div>
 
-      <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+  <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
 
-      <div>
-        <p>{{ post.text |markdown | safe| truncatechars:50| linebreaksbr }}</p>
-      </div>
+  <div>
+    <p>{{ post.text |markdown | safe| truncatechars:50| linebreaksbr }}</p>
+  </div>
 
-      <hr>
+  <hr />
 
-      <div>
-        <a href="{% url 'post_detail' pk=post.pk%}">Comments: {{ post.approved_comments.count }}</a>
-      </div>
-    </div>
-{% endfor %}
+  <div>
+    <a href="{% url 'post_detail' pk=post.pk%}"
+      >Comments: {{ post.approved_comments.count }}</a
+    >
+  </div>
+</div>
+{% endfor %} 
 
+{% else %}
+<div class="" >
+<div class="alert alert-secondary alert-dismissible fade show" role="alert">
+  <i class="far fa-sad-tear"> Sorry no posts.
+  <a href="{% url 'post_new' %}">Add post</a>
+  </i> 
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
 {% for post in search_result %}
 <div class="post">
-    <div class="date">
-        <p><em> Published: {{ post.published_date }} </em></p>
-    </div>
-    <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+  <div class="date">
+    <p><em> Published: {{ post.published_date }} </em></p>
+  </div>
+  <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
 
-    <div>
-        <p>{{ post.text |markdown | safe| truncatechars:50| linebreaksbr }}</p>
-    </div>
+  <div>
+    <p>{{ post.text |markdown | safe| truncatechars:50| linebreaksbr }}</p>
+  </div>
 
-    <hr>
+  <hr />
 
-    <div>
-        <a href="{% url 'post_detail' pk=post.pk%}">Comments: {{ post.approved_comments.count }}</a>
-    </div>
+  <div>
+    <a href="{% url 'post_detail' pk=post.pk%}"
+      >Comments: {{ post.approved_comments.count }}</a
+    >
+  </div>
 </div>
-{% endfor %}
-{% endblock %}
+
+{% endfor %} {% endblock %}
