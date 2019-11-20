@@ -28,6 +28,7 @@ def search(request):
     user_query = str(request.GET.get('query', ''))
     search_result = Post.objects.filter(
         title__contains=user_query).order_by('-published_date')
+    posts = search_result
     print(search_result)
     if search_result.count() == 0:
         posts = Post.objects.filter(
@@ -38,7 +39,7 @@ def search(request):
         return render(request, 'blog/post_list.html', stuff_for_frontend)
 
     else:
-        stuff_for_frontend = {'search_result': search_result}
+        stuff_for_frontend = {'posts': posts}
         post_found = str(search_result.count())
         messages.success(request, 'About '+post_found+' results ')
         return render(request, 'blog/post_list.html', stuff_for_frontend)
@@ -115,6 +116,7 @@ def post_delete(request, pk):
 @login_required
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    print(post)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -122,6 +124,7 @@ def add_comment_to_post(request, pk):
             comment.author = request.user
             comment.post = post
             comment.save()
+            print(comment)
             return redirect('post_detail', pk=post.pk)
     else:
         form = CommentForm()

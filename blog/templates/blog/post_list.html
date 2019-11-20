@@ -1,45 +1,55 @@
-{% extends 'blog/base.html' %} {% load markdownify %} {% block title%} My Blog
-{% endblock%} {% block nav %}
-<li class="nav-item">
-  <a class="nav-link" href="{% url 'post_new'%}"
-    ><i class="fa fa-plus">Add post</i></a
-  >
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="{% url 'post_draft_list' %}"
-    ><i class="fas fa-pencil-ruler fa">view drafts</i></a
-  >
-</li>
-{% endblock%} {% block content%} 
+{% extends 'blog/base.html' %}
+{% load markdownify %}
+{% block title%} My Blog {% endblock%}
 
-{% if posts%}
+{% block nav %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'post_new'%}"><i class="fa fa-plus">Add post</i></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'post_draft_list' %}"><i class="fas fa-pencil-ruler fa">view drafts</i></a>
+  </li>
+{% endblock%}
+
+{% block content%}
+
+{% if posts %}
 {% for post in posts %}
-<div class="post">
-  <div class="date">
-    <p><em> Published: {{ post.published_date }} </em></p>
-    {% if post.edited_date%}
-    <p><em> Edited: {{ post.edited_date }} </em></p>
-    {% endif%}
-  </div>
 
-  <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+<!-- Title -->
+<h1 class="mt-4"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
 
-  <div>
-    <p>{{ post.text |markdown | safe| truncatechars:50| linebreaksbr }}</p>
-  </div>
+<!-- Author -->
+<p class="lead">
+by
+<a href="#">{{post.author}}</a>
+</p>
 
-  <hr />
+<hr>
+<!-- Date/Time -->
+<p> Published: {{ post.published_date }}</p>
+{% if post.edited_date%}
+<p> Edited: {{ post.edited_date }} </p>
+{% endif%}
+<hr>
 
-  <div>
-    <a href="{% url 'post_detail' pk=post.pk%}"
-      >Comments: {{ post.approved_comments.count }}</a
-    >
-  </div>
-</div>
-{% endfor %} 
+<!-- Preview Image 
+<img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+<hr>
+-->
 
+<!-- Post body -->
+<p class="lead">
+<p>{{ post.text |markdown | safe| truncatechars:50| linebreaksbr }}</p>
+</p>
+
+<!--Comment count op a post -->
+<a href="{% url 'post_detail' pk=post.pk%}">Comments: {{ post.approved_comments.count }}</a>
+
+{% endfor %}
+
+<!--If no posts -->
 {% else %}
-<div class="" >
 <div class="alert alert-secondary alert-dismissible fade show" role="alert">
   <i class="far fa-sad-tear"> Sorry no posts.
   <a href="{% url 'post_new' %}">Add post</a>
@@ -49,24 +59,5 @@
     </button>
 </div>
 {% endif %}
-{% for post in search_result %}
-<div class="post">
-  <div class="date">
-    <p><em> Published: {{ post.published_date }} </em></p>
-  </div>
-  <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
 
-  <div>
-    <p>{{ post.text |markdown | safe| truncatechars:50| linebreaksbr }}</p>
-  </div>
-
-  <hr />
-
-  <div>
-    <a href="{% url 'post_detail' pk=post.pk%}"
-      >Comments: {{ post.approved_comments.count }}</a
-    >
-  </div>
-</div>
-
-{% endfor %} {% endblock %}
+{% endblock %}

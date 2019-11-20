@@ -9,6 +9,7 @@
 </li>
 {% endblock%}
     {% block content%}
+    {% if posts%}
         {% for post in posts %}
             <div class="post">
                 <div class="date">
@@ -19,4 +20,7 @@
                 <p> {{ post.text | truncatechars:50}} </p>
             </div>
         {% endfor %}
+         {% else %}
+         no drafts
+    {% endif %}
     {% endblock %}
