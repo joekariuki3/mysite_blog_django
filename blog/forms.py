@@ -19,9 +19,9 @@ class PostForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     helper = FormHelper()
     helper.form_method = 'POST'
+    submit = helper.add_input(Submit('Comment', 'Comment'))
     text = forms.CharField(widget=forms.Textarea(
-        attrs={'class': 'form-control', 'placeholder': 'Comment'}))
-    submit = helper.add_input(Submit('Add Comment', 'Add comment'))
+        attrs={'class': 'form-control', 'placeholder': 'Comment', 'rows': '3'}))
 
     class Meta:
         model = Comment

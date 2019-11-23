@@ -47,7 +47,14 @@ def search(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    stuff_for_frontend = {'post': post}
+    form = CommentForm(request.POST)
+    author_name = post.author
+    author_posts = Post.objects.filter(author=author_name)
+    author_posts_count = str(author_posts.count())
+    author_details = User.objects.get(username=author_name)
+    print(author_name, author_details, author_posts, author_posts_count)
+    stuff_for_frontend = {'post': post, 'form': form,
+                          'author_details': author_details, 'author_posts_count': author_posts_count, 'author_posts': author_posts}
     return render(request, 'blog/post_detail.html', stuff_for_frontend)
 
 
@@ -128,8 +135,7 @@ def add_comment_to_post(request, pk):
             return redirect('post_detail', pk=post.pk)
     else:
         form = CommentForm()
-
-        return render(request, 'blog/add_comment_to_post.html', {'form': form, 'post': post})
+        return render(request, 'blog/post_detail.html', {'form': form, 'post': post})
 
 
 @login_required
@@ -170,3 +176,7 @@ def userProfile(request):
     # print(user_posts)
 
     return render(request, 'blog/user_profile.html', {'profile': profile})
+
+
+def landing_page(request):
+    return render(request, 'blog/landing_page.html')

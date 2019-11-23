@@ -1,3 +1,7 @@
-body {
-  padding-top: 70px;
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,700");
+.main {
+  padding-top: -70px;
+}
+.main-message {
+  padding-top: 85px;
 }

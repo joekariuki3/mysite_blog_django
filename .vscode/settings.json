@@ -1,6 +1,37 @@
 {
+  "python.pythonPath": "/home/muhoho/.conda/envs/mysite_blog/bin/python",
+
+  "files.associations": {
+    "**/templates/*.html": "django-html",
+    "**/templates/*": "django-txt",
+    "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+  },
+
   "emmet.includeLanguages": {
     "django-html": "html"
   },
-  "python.pythonPath": "/home/muhoho/.conda/envs/mysite_blog/bin/python"
+
+  "highlight-matching-tag.styles": {
+    "opening": {
+      "name": {
+        "underline": "yellow"
+      }
+    }
+  },
+
+  {
+    "auto-rename-tag.activationOnLanguage": [
+        "html",
+        "xml",
+        "php",
+        "javascript"
+    ]
+},
+
+{
+  "auto-close-tag.SublimeText3Mode": true
+},
+"css.fileExtensions": [ "css", "scss"].
+
+
 }

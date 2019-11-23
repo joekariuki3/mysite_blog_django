@@ -11,53 +11,59 @@
   </li>
 {% endblock%}
 
+
 {% block content%}
 
-{% if posts %}
-{% for post in posts %}
+<!-- 1st colum in ROW 2 (BLOCK CONTENTS)-->
+<div class="col-xs-12 col-sm-10 col-md-8">
+ 
+ <!--If no posts -->
+  {% if not posts %}
+  <div class="text-center text-muted my-4">
+    <i class="fas fa-sad-tear fa-8x"></i>
+    <h1 class="display-4 ">Sorry no posts.</h1>
+    <a class="btn btn-outline-secondary" href="{% url 'post_new' %}">Add post</a>
+  </div>
+  <hr class="my-4">
+  {% else %}
+  {% for post in posts %}
 
-<!-- Title -->
-<h1 class="mt-4"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
 
-<!-- Author -->
-<p class="lead">
-by
-<a href="#">{{post.author}}</a>
-</p>
+  <!-- Title -->
+<a class="text-decoration-none text-dark" href="{% url 'post_detail' pk=post.pk %}"><h1 class="display-4">{{ post.title }}</h1></a>
+  
+  
 
-<hr>
-<!-- Date/Time -->
-<p> Published: {{ post.published_date }}</p>
-{% if post.edited_date%}
-<p> Edited: {{ post.edited_date }} </p>
-{% endif%}
-<hr>
 
-<!-- Preview Image 
-<img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
-<hr>
--->
 
-<!-- Post body -->
-<p class="lead">
-<p>{{ post.text |markdown | safe| truncatechars:50| linebreaksbr }}</p>
-</p>
+  <!-- Date/Time -->
+  <p class="text-muted"> Published: {{ post.published_date }}</p>
+  {% if post.edited_date%}
+  <p class="text-muted"> Edited: {{ post.edited_date }} </p>
+  {% endif%}
+  <hr>
 
-<!--Comment count op a post -->
-<a href="{% url 'post_detail' pk=post.pk%}">Comments: {{ post.approved_comments.count }}</a>
+  <!-- Preview Image 
+  <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+  <hr>
+  -->
 
-{% endfor %}
+  <!-- Post body -->
+  <p class="lead">{{ post.text |markdown | safe| truncatechars:200| linebreaksbr }}</p>
+  
 
-<!--If no posts -->
-{% else %}
-<div class="alert alert-secondary alert-dismissible fade show" role="alert">
-  <i class="far fa-sad-tear"> Sorry no posts.
-  <a href="{% url 'post_new' %}">Add post</a>
-  </i> 
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-    </button>
+  <!--Comment count op a post -->
+  <a class="text-info" href="{% url 'post_detail' pk=post.pk%}">Comments: {{ post.approved_comments.count }}</a>
+<hr class="my-4">
+  {% endfor %}
+  {% endif %}
+ 
 </div>
-{% endif %}
 
+<div class="col-xs-12 col-sm-6 col-md-4 text-center">
+  <i class="fas fa-code"></i>
+    <h3>HTML5</h3>
+    <P>Build with the latest version of HTML</P>
+  </div> 
+</div>
 {% endblock %}

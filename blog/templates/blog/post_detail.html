@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %}
 {% load markdownify %}
 {% block title%}  {{post.title}}  {% endblock%}
-
+{% load crispy_forms_tags %}
 {% block nav %}
   <li>
     <a class="nav-link" href="{% url 'post_new'%}"><i class="fa fa-plus">Add post</i></a>
@@ -10,106 +10,130 @@
     <a class="nav-link" href="{% url 'post_draft_list' %}"><i class="fas fa-pencil-ruler fa">view drafts</i></a>
   </li>
 {% endblock%}
+
+
+
 {% block content%}
 
-
-
-<!--buttons-->
-{% if user.is_authenticated %}
-{% if not post.published_date %}
- <a href="{% url 'post_publish' pk=post.pk %}" class="btn btn-outline-primary">Publish</a>
+<div class="col-xs-12 col-sm-10 col-md-8">
+  <br>
+  <!--buttons-->
+  <div class="">
+    {% if user.is_authenticated %}
+    {% if not post.published_date %}
+    <a href="{% url 'post_publish' pk=post.pk %}" class="btn btn-outline-primary">Publish</a>
     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-{% endif %}
-<a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-outline-light"><i class="fa fa-edit" style="color:black;"> Edit</i></a>
-&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-<a href="{% url 'post_delete' pk=post.pk %}" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this Post ?')">
-<i class="fas fa-trash-alt" > Delete</i>
-</a>
-<hr>
-{% endif %}
+    {% endif %}
+    <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-outline-dark"><i class="fa fa-edit" > Edit</i></a>
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <a href="{% url 'post_delete' pk=post.pk %}" class="btn btn-outline-danger" onclick="return confirm('Are you sure you want to delete this Post ?')">
+    <i class="fas fa-trash-alt" > Delete</i>
+    </a>
+    <hr class="my-4">
+    {% endif %}
+  </div>
 
+  <!--post-->
+  <div class="">
 
-<!-- Title -->
-<h1 class="mt-4"><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+    <!-- Title -->
+    <h1 class="display-4 text-center">{{ post.title }}</h1>
 
-<!-- Author -->
-<p class="lead">
-by
-<a href="#">{{post.author}}</a>
-</p>
+    <!-- Author -->
+<div class="btn-group align-self-right">
 
-<hr>
-<!-- Date/Time -->
-{% if post.published_date %}
-<p> Published: {{ post.published_date }}</p>
-{% if post.edited_date%}
-<p> Edited: {{ post.edited_date }} </p>
-{% endif%} 
-{% endif%}
+  <button class="btn btn-outline-light dropdown-toggle text-dark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="align:center;">
+    by {{post.author}}
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">Email: {{author_details.email}}</a>
+    <a class="dropdown-item" href="#">Total posts: {{author_posts_count}}</a>
+    {% if author_posts %}
+    
+    <a class="dropdown-item" href="#">Post titles:
+    {% for post_title in author_posts %}
+    <li> 
+  <a href="">{{post_title}}</a>
+    
+    
+    </li>
+     {% endfor %}
+     </a>
+    
+    {% endif %}
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="#">Separated link</a>
+  </div>
+</div>
+    <!-- Date/Time -->
+    {% if post.published_date %}
+    {% if post.edited_date%}
+    <p class="text-muted"> Edited: {{ post.edited_date }} </p>
+    {% endif%} 
+    {% endif%}
+    
+    <!-- Preview Image 
+    <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+    <hr>
+    -->
+    <!-- Post body -->
+    <p class="lead">{{ post.text |markdown | safe| linebreaksbr }}</p>
 
-<hr>
+  </div>
 
-
-
-
-<!-- Preview Image 
-<img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
-<hr>
--->
-
-<!-- Post body -->
-<p class="lead">
-<p>{{ post.text |markdown | safe| truncatechars:50| linebreaksbr }}</p>
-</p>
-
-<hr>
-
- <!-- Comments Form -->
- <a href=""></a>
- {% if  post.published_date %}
-        <div class="card my-4">
-          <h5 class="card-header">Leave a Comment:</h5>
-          <div class="card-body">
-          <form method='post' >
-          {% csrf_token %}
-              <div class="form-group">
-                <textarea class="form-control" rows="3"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+  <div class="card my-8">
+    <!-- Comments Form -->
+    {% if  post.published_date %}
+    
+      <h5 class="card-header">leave a comment:</h5>
+      {% if user.is_authenticated %}
+      <div class="card-body">
+        <form method="post" class="form-group" action="{% url 'add_comment_to_post' pk=post.pk %}">
+          <div class="form-group">
+            {% csrf_token %}
+            {{ form|crispy }}
           </div>
-        </div>
-        <a href="{% url 'add_comment_to_post' pk=post.pk %}" class="btn btn-light" >Add Comment</a>
- {% endif %}
-
- 
-
- <!-- Single Comment -->
- {% for comment in post.comments.all %}
-      {% if user.is_authenticated or comment.approved %}
-        <div class="media mb-4">
-          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-          <div class="media-body">
-            <h5 class="mt-0">{{comment.author}}</h5>
-
-            <h6 class="mt-0">{{comment.created_date}}</h6>
-
-            {% if not comment.approved and user.is_superuser %}
-                <a href="{% url 'comment_approve' pk=comment.pk %}"> <i class="fas fa-check"></i></a>
-
-                <a href="{% url 'comment_remove' pk=comment.pk %}"><i class="fas fa-trash-alt"></i></a>
-            {% endif %}
-
-             
-            <p> {{comment.text | markdown | safe |linebreaksbr}} </p>
-          </div>
-        </div>
+          <button type="submit" class="btn btn-primary">Comment</button>
+        </form>
+      </div>
+      {% else %}
+      <div class="card-body">
+        <a href="{% url 'add_comment_to_post' pk=post.pk  %}">Login to comment</a>
+      </div>
+      {% endif %}
+    {% endif %}
+    <br>
+    <!-- Single Comment -->
+    {% for comment in post.comments.all %}
+    {% if user.is_authenticated or comment.approved %}
+    <div class="padding">
+      <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+      <div class="media-body">
+        <h5 class="mt-0">{{comment.author}}</h5>
+        <h6 class="mt-0">{{comment.created_date}}</h6>
+        {% if not comment.approved and user.is_superuser %}
+        <a href="{% url 'comment_approve' pk=comment.pk %}"> <i class="fas fa-check"></i></a>
+        <a href="{% url 'comment_remove' pk=comment.pk %}"><i class="fas fa-trash-alt"></i></a>
         {% endif %}
+        <p> {{comment.text | markdown | safe |linebreaksbr}} </p>
+      </div>
+    </div>
+    
+    <!-- Comment with nested comments (replies) -->
+    <div class=" my-6">
+      <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+      <div class="media-body">
+        <h5 class="mt-0">Commenter Name</h5>congue felis in faucibus.
+      </div>
+    </div>
+  </div>
+  {% endif %}
 
-      {% empty %}
-{% if  post.published_date %}
-<p>No comment yet...</p>
-{% endif %}
-{% endfor %}
+  {% empty %}
+  {% if  post.published_date %}
+  <p>No comment yet...</p>
+  {% endif %}
+  {% endfor %}
 
+</div>
 {% endblock %}
