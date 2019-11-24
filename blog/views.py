@@ -19,9 +19,8 @@ def post_list(request):
     posts = Post.objects.filter(
         published_date__lte=timezone.now()).order_by('-published_date')
     posts_count = str(posts.count())
-    print(posts_count)
-    stuff_for_frontend = {'posts': posts}
-    return render(request, 'blog/post_list.html', stuff_for_frontend, {'posts_count': posts_count})
+    stuff_for_frontend = {'posts': posts, 'posts_count': posts_count, }
+    return render(request, 'blog/post_list.html', stuff_for_frontend)
 
 
 def search(request):
@@ -52,9 +51,10 @@ def post_detail(request, pk):
     author_posts = Post.objects.filter(author=author_name)
     author_posts_count = str(author_posts.count())
     author_details = User.objects.get(username=author_name)
-    print(author_name, author_details, author_posts, author_posts_count)
     stuff_for_frontend = {'post': post, 'form': form,
-                          'author_details': author_details, 'author_posts_count': author_posts_count, 'author_posts': author_posts}
+                          'author_details': author_details,
+                          'author_posts_count': author_posts_count,
+                          'author_posts': author_posts}
     return render(request, 'blog/post_detail.html', stuff_for_frontend)
 
 
@@ -171,7 +171,7 @@ def signup(request):
 def userProfile(request):
     profile = request.user
     user_pk = User.objects.get(username=profile).pk
-    #user_posts = [Post.objects.get(author=profile)]
+    # user_posts = [Post.objects.get(author=profile)]
     print(user_pk)
     # print(user_posts)
 

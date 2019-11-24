@@ -14,9 +14,10 @@
 
 {% block content%}
 
+
 <!-- 1st colum in ROW 2 (BLOCK CONTENTS)-->
 <div class="col-xs-12 col-sm-10 col-md-8">
- 
+{% include "message.html" %}
  <!--If no posts -->
   {% if not posts %}
   <div class="text-center text-muted my-4">
@@ -49,7 +50,14 @@
   -->
 
   <!-- Post body -->
-  <p class="lead">{{ post.text |markdown | safe| truncatechars:200| linebreaksbr }}</p>
+  <p class="lead" id="post_body" value="{{ post.text}}">
+    {{ post.text |markdown | safe| truncatechars:200| linebreaksbr }}
+
+    {% if post.text|length > 200 %}
+    <a href="{%url 'post_detail' pk=post.pk%}">See more</a>
+  {% endif %}
+  </p>
+  
   
 
   <!--Comment count op a post -->

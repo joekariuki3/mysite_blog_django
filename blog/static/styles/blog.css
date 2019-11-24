@@ -1,7 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,700");
 .main {
-  padding-top: -70px;
+  padding-top: 75px;
 }
 .main-message {
-  padding-top: 85px;
+  display: inline-block;
+  opacity: 0.7;
+}
+.button-card,
+.comment-card {
+  display: inline-block;
 }

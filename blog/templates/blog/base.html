@@ -85,32 +85,12 @@
       </div>
     </nav>
     <!-- Page Content -->
- 
+
     
-    <div class="container main-message ">
-      <!-- 1st ROW Messages-->
-      <div class="row">
-        <!-- Message Content Row -->
-        <div class="col-xs-12 col-sm-10 col-md-5">
-          <!-- 1st colum in ROW 1 -->
-           {% for message in messages %}
-           <div class="panel panel-default text-center">
-             <div class="alert {{ message.tags }} alert-dismissible" role="alert">
-               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                 <span aria-hidden="true">&times;</span>
-                </button>
-                {{ message }}
-              </div>
-            </div>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-
-
+    
     <div class="container main">
       <div class="row">
-        {% block content%}
+      {% block content %}
         <!-- 1st colum in ROW 2 (BLOCK CONTENTS)-->
 
         <!-- ONLY or Whith 2nd colum-->
