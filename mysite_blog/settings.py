@@ -19,7 +19,7 @@ DEBUG = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-ALLOWED_HOSTS = ['b76589e3.ngrok.io',
+ALLOWED_HOSTS = ['d5617306.ngrok.io',
                  '127.0.0.1',
                  ]
 LOGIN_URL = '/accounts/login'
@@ -57,7 +57,9 @@ ROOT_URLCONF = 'mysite_blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'blog/templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

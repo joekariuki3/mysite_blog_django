@@ -20,18 +20,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    # 127.0.0.1:8000/accounts/login==> local
-    # mydjangoblog.com/accounts/login ==> online
-    path('accounts/login/', auth_views.LoginView.as_view(
-        template_name="registration/login.html"), name='login'),
-
-    # 127.0.0.1:8000/accounts/logout==> local
-    # mydjangoblog.com/accounts/logout ==> online
-    path('accounts/logout/', view=auth_views.LogoutView.as_view(),
-         name='logout', kwargs={'next_page': '/'}),
-
-
+    path('accounts/', include('django.contrib.auth.urls')),
     # 127.0.0:8000
     path('', include('blog.urls'))
 ]

@@ -1,5 +1,5 @@
 {% extends 'blog/base.html' %}
-{% block title%} Login {% endblock%}
+{% block title%} Signup {% endblock%}
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container mt-4 mb-4">
@@ -7,19 +7,18 @@
         <div class="col-md-5 ">
             <div class="card">
                 <div class="card-body"> 
-                <h2 class="text-center">Log in</h2>
-                <form method="post" class="form-group" novalidate>
+                    <h2 class="text-center">Sign up</h2>
+                    <form method="post" class="form-group" novalidate>
                         {% csrf_token %}
                         {{ form|crispy }}
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary">Log in</button>
+                            <button type="submit" class="btn btn-primary">Sign up</button>
                         </div>
                     </form>
-                    <hr class"my-4">
-                    <p class="text-center">Don`t have an account ? <a href="{% url 'signup'%}">Signup here</a></p>
-                </div>
-            </div> 
+                </div> 
+            </div>
         </div>
-    </div>
-</div>
+    </div>  
+</div>   
+  
 {% endblock%}
