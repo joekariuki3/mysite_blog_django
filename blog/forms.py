@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .models import Post, Comment
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from django.contrib.auth.forms import AuthenticationForm
 
 
 class PostForm(forms.ModelForm):

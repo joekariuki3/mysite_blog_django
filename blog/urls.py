@@ -56,4 +56,5 @@ urlpatterns = [
     # 127.0.0.1:8000/profile ==> local
     # mydjangoblog.com/profile ==> online
     path('profile/', views.userProfile, name='profile'),
+
 ]

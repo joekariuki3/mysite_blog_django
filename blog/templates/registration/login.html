@@ -10,7 +10,18 @@
                 <h2 class="text-center">Log in</h2>
                     <form method="post" class="form-group" novalidate>
                         {% csrf_token %}
-                        {{ form|crispy }}
+                        <div id="div_id_username" class="form-group">
+                            <div class="">
+                                <input type="text" name="username" autofocus="" class="textinput textInput form-control" required="" id="id_username" placeholder="Username">
+                            </div>
+                        </div>
+
+                        <div id="div_id_password" class="form-group">
+                            <div class="">
+                                <input type="password" name="password" class="textinput textInput form-control" required="" id="id_password" placeholder="Password">
+                            </div>
+                        </div>
+
                         <button type="submit" class="btn btn-primary mb-2">Log in</button><br>
                         <a class"btn btn-link" href="#">Forgot your password?</a>
                     </form>

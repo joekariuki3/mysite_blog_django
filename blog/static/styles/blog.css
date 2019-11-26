@@ -6,7 +6,8 @@
 .post-body {
   display: inline-block;
 }
-.asteriskField {
+.asteriskField,
+.requiredField {
   display: none;
 }
 form .alert ul li {
