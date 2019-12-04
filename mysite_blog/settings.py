@@ -1,6 +1,6 @@
 
 import os
-import django_heroku
+
 from django.contrib.messages import constants as messages
 
 
