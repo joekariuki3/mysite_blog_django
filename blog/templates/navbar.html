@@ -17,9 +17,9 @@
           <ul class="nav navbar-nav ml-auto">
             <form method="get" action="{%url 'search' %}" class="form-inline my-2  ">
               <div class="input-group mb-3">
-                <input type="search" name="query" class="form-control" placeholder="Search post" aria-label="Search post" aria-describedby="basic-addon2">
+                <input type="search" name="query" class="form-control" placeholder="Search post" aria-label="Search post" aria-describedby="basic-addon2" >
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="submit">
+                  <button class="btn btn-outline-secondary" type="submit" >
                     <i class="fas fa-search"></i>
                   </button>
                 </div>
@@ -53,8 +53,8 @@
           {% else %}
 
                 <form class="form-inline ">
-                  <a class="btn btn-outline-secondary mr-4" href="{% url 'login'%}" ><i class="fas fa-sign-in-alt fa"></i>Log in</a>
-                  <a class="btn btn-outline-primary mr-4" href="{% url 'signup'%}" ><i class="fas fa-user-plus"></i> Sign up</a>
+                  <a class="btn btn-outline-secondary mr-4 " href="{% url 'login'%}" style="border:none;" ><i class="fas fa-sign-in-alt fa"></i>Log in</a>
+                  <a class="btn btn-outline-primary mr-4" href="{% url 'signup'%}" style="border:none; ><i class="fas fa-user-plus"></i> Sign up</a>
                 </form>
 
                 {% endif %} 

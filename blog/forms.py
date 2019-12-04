@@ -22,7 +22,7 @@ class CommentForm(forms.ModelForm):
     helper.form_method = 'POST'
     submit = helper.add_input(Submit('Comment', 'Comment'))
     text = forms.CharField(widget=forms.Textarea(
-        attrs={'class': 'form-control', 'placeholder': 'Comment', 'rows': '3'}))
+        attrs={'class': 'form-control ', 'placeholder': 'Comment', 'rows': '0'}))
 
     class Meta:
         model = Comment

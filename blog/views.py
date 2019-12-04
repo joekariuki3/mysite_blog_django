@@ -48,13 +48,16 @@ def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     form = CommentForm(request.POST)
     author_name = post.author
+    user_name = request.user
     author_posts = Post.objects.filter(author=author_name)
     author_posts_count = str(author_posts.count())
     author_details = User.objects.get(username=author_name)
     stuff_for_frontend = {'post': post, 'form': form,
                           'author_details': author_details,
                           'author_posts_count': author_posts_count,
-                          'author_posts': author_posts}
+                          'author_posts': author_posts,
+                          'author_name': author_name,
+                          'user_name': user_name}
     return render(request, 'blog/post_detail.html', stuff_for_frontend)
 
 
@@ -115,6 +118,7 @@ def post_publish(request, pk):
 @login_required
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    print(Post)
     post.delete()
     messages.success(request, 'Post was Deleted Successfully')
     return redirect('/', pk=post.pk)
