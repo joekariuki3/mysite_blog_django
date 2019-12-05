@@ -126,6 +126,7 @@
     
     <br>
     <!-- Display comment -->
+    {% if post.published_date %}
     <div class="card card-body">
       {% for comment in post.comments.all %}
       {% if user.is_authenticated or comment.approved %}
@@ -154,6 +155,7 @@
       {% endif %}
       {% endfor %}
     </div>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
