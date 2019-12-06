@@ -118,7 +118,6 @@ def post_publish(request, pk):
 @login_required
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    print(Post)
     post.delete()
     messages.success(request, 'Post was Deleted Successfully')
     return redirect('/', pk=post.pk)
@@ -135,7 +134,6 @@ def add_comment_to_post(request, pk):
             comment.author = request.user
             comment.post = post
             comment.save()
-            print(comment)
             return redirect('post_detail', pk=post.pk)
     else:
         form = CommentForm()

@@ -29,10 +29,12 @@ class Comment(models.Model):
     author = models.CharField(max_length=200)
     text = models.TextField()
     created_date = models.DateField(default=timezone.now)
+    approve_date = models.DateField(blank=True, null=True)
     approved = models.BooleanField(default=False)
 
     def approve(self):
         self.approved = True
+        self.approve_date = timezone.now()
         self.save()
 
     def __str__(self):

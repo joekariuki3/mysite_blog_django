@@ -128,7 +128,7 @@
     <!-- Display comment -->
     {% if post.published_date %}
     <div class="card card-body">
-      {% for comment in post.comments.all %}
+      {% for comment in post.comments.all reversed %}
       {% if user.is_authenticated or comment.approved %}
       <div class="card card-body media-body">
         <div>
