@@ -8,7 +8,7 @@ from django.contrib.auth.forms import AuthenticationForm
 
 class PostForm(forms.ModelForm):
     title = forms.CharField(widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': 'Post title'}))
+        attrs={'class': 'form-control', 'placeholder': 'Post title', 'maxlength':'60'}))
     text = forms.CharField(widget=forms.Textarea(
         attrs={'class': 'form-control', 'placeholder': 'Post body'}))
 

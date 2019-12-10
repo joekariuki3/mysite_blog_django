@@ -12,7 +12,7 @@
 {% block content%}
 <!--body-->
 <div class="col-xs-12 col-sm-12 col-md-10 col-lg-9 col-xl-8">
-{% include "message.html" %}
+  {% include "message.html" %}
 
   <!--buttons-->
   <div>
@@ -115,9 +115,7 @@
           {{ form|crispy }}
           <button type="submit" class="btn btn-primary">Comment</button>
         </form>
-      </div>
-      {% else %}
-      <div class="card-body">
+        {% else %}
         <a href="{% url 'add_comment_to_post' pk=post.pk  %}">Login to comment</a>
       </div>
       {% endif %}
@@ -127,7 +125,7 @@
     <br>
     <!-- Display comment -->
     {% if post.published_date %}
-    <div class="card card-body">
+    <div>
       {% for comment in post.comments.all reversed %}
       {% if user.is_authenticated or comment.approved %}
       <div class="card card-body media-body">

@@ -179,6 +179,10 @@ def userProfile(request):
 
     return render(request, 'blog/user_profile.html', {'profile': profile})
 
-
-def landing_page(request):
-    return render(request, 'blog/landing_page.html')
+def user_posts(request):
+    user= request.user
+    user_pk = User.objects.get(username=user).pk
+    user_posts = Post.objects.filter(author=user_pk)
+    post_count = user_posts.count()
+    stuff_for_frontend = {'user_posts': user_posts, 'post_count': post_count}
+    return render(request, 'blog/user_posts.html', stuff_for_frontend )    

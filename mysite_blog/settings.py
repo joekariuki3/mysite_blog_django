@@ -19,7 +19,7 @@ DEBUG = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'  
 
-ALLOWED_HOSTS = ['d5617306.ngrok.io',
+ALLOWED_HOSTS = ['52832ccb.ngrok.io',
                  '127.0.0.1',
                  ]
 LOGIN_URL = '/accounts/login'
