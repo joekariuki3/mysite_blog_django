@@ -32,10 +32,7 @@
 
 
   <!-- Date/Time -->
-  <p class="text-muted"> Published on {{ post.published_date }}</p>
-  {% if post.edited_date%}
-  <p class="text-muted"> Edited: {{ post.edited_date }} </p>
-  {% endif%}
+  <small class="text-muted"> Published on {{ post.published_date }}</small>
   <hr>
 
   <!-- Preview Image 
@@ -55,7 +52,9 @@
   
 
   <!--Comment count op a post -->
-  <a class="text-info" href="{% url 'post_detail' pk=post.pk%}">Comments: {{ post.approved_comments.count }}</a>
+  <small>
+    <a class="text-info" href="{% url 'post_detail' pk=post.pk%}">Comments: {{ post.approved_comments.count }}</a>
+  </small>
   <hr class="my-4">
   {% endfor %}
   {% endif %}

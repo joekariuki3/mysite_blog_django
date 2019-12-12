@@ -28,8 +28,8 @@ class Comment(models.Model):
         'blog.Post', on_delete=models.CASCADE, related_name='comments')
     author = models.CharField(max_length=200)
     text = models.TextField()
-    created_date = models.DateField(default=timezone.now)
-    approve_date = models.DateField(blank=True, null=True)
+    created_date = models.DateTimeField(default=timezone.now)
+    approve_date = models.DateTimeField(blank=True, null=True)
     approved = models.BooleanField(default=False)
 
     def approve(self):

@@ -59,5 +59,6 @@ footer {
 }
 
 div.scrollable {
-  height: 400px;
+  height: auto;
   overflow: auto;
+  max-height: 400px;

@@ -68,10 +68,16 @@
         {% endif %}
     </div>
 </div>  
-
-<div class="col-xs-12 col-sm-6 col-md-4">
-    <i class="fas fa-code"></i>
-    <h3>HTML5</h3>
-    <P>Build with the latest version of HTML</P>
-</div> 
+    <div class="">
+        
+        <div class="text-center">
+            <img class=" mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+            <h5 >Profile</h3>
+        </div>
+        <hr>
+         <div class=" ">
+        <p>Username: {{user}}</p>
+        <p>Email: {{user.email}}</p>
+        </div> 
+    </div>
 {% endblock %}

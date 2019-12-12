@@ -81,7 +81,7 @@
     <div>
       {% if post.published_date %}
       {% if post.edited_date%}
-      <p class="text-muted"> Edited: {{ post.edited_date }} </p>
+      <small class="text-muted"> Edited on {{ post.edited_date }} </small>
       {% endif%} 
       {% endif%}
     </div>
@@ -132,7 +132,10 @@
         <div>
         <img class=" mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
           <h5 class="mt-0">{{comment.author}}</h5>
-          <h6 class="mt-0">{{comment.created_date}}</h6>
+          {% if comment.created_date %}
+          <small class="mb-2 text-muted">{{comment.created_date}}</small>
+          {% endif %}
+          
           {% if not comment.approved and user.is_superuser %}
             <a href="{% url 'comment_approve' pk=comment.pk %}"> <i class="fas fa-check"> Approve </i></a>
             <a href="{% url 'comment_remove' pk=comment.pk %}"><i class="fas fa-trash-alt text-danger">   Delete</i></a>
