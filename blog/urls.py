@@ -9,7 +9,7 @@ urlpatterns = [
 
     # 127.0.0.1:8000/post/3 ==> local
     # mydjangoblog.com/post/3 ==> online
-    path('post/<int:pk>/', views.post_detail, name='post_detail'),
+    path('post/<str:slug>/', views.post_detail, name='post_detail'),
 
     # 127.0.0.1:8000/post/new ==> local
     # mydjangoblog.com/post/new ==> online
@@ -17,11 +17,11 @@ urlpatterns = [
 
     # 127.0.0.1:8000/post/3/edit ==> local
     # mydjangoblog.com/post/3/edit ==> online
-    path('post/<int:pk>/edit/', views.post_edit, name='post_edit'),
+    path('post/<str:slug>/edit/', views.post_edit, name='post_edit'),
 
     # 127.0.0.1:8000/post/3/delete ==> local
     # mydjangoblog.com/post/3/delete ==> online
-    path('post/<int:pk>/delete/', views.post_delete, name='post_delete'),
+    path('post/<str:slug>/delete/', views.post_delete, name='post_delete'),
 
     # 127.0.0.1:8000/drafts ==> local
     # mydjangoblog.com/drafts ==> online
@@ -29,20 +29,20 @@ urlpatterns = [
 
     # 127.0.0.1:8000/post/3/publish ==> local
     # mydjangoblog.com/post/3/publish ==> online
-    path('post/<int:pk>/publish/', views.post_publish, name='post_publish'),
+    path('post/<str:slug>/publish/', views.post_publish, name='post_publish'),
 
     # 127.0.0.1:8000/post/3/comment ==> local
     # mydjangoblog.com/post/3/comment ==> online
-    path('post/<int:pk>/comment/', views.add_comment_to_post,
+    path('post/<str:slug>/comment/', views.add_comment_to_post,
          name='add_comment_to_post'),
 
     # 127.0.0.1:8000/comment/3/remove ==> local
     # mydjangoblog.com/comment/3/remove ==> online
-    path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
+    path('comment/<str:slug>/remove/', views.comment_remove, name='comment_remove'),
 
     # 127.0.0.1:8000/comment/3/approve ==> local
     # mydjangoblog.com/comment/3/approve ==> online
-    path('comment/<int:pk>/approve/',
+    path('comment/<str:slug>/approve/',
          views.comment_approve, name='comment_approve'),
 
     # 127.0.0.1:8000/signup ==> local

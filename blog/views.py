@@ -12,6 +12,7 @@ from .models import Post, Comment
 from django.db.models import Q
 from django.contrib.auth.models import User
 # Create your views here.
+import secrets
 
 
 def post_list(request):
@@ -44,8 +45,8 @@ def search(request):
         return render(request, 'blog/post_list.html', stuff_for_frontend)
 
 
-def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def post_detail(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     form = CommentForm(request.POST)
     author_name = post.author
     user_name = request.user
@@ -68,10 +69,11 @@ def post_new(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
+            post.slug = str(((post.title) +" "+secrets.token_hex(15)).replace(" ","-"))
             post.save()
             messages.info(
                 request, 'Posted as Draft. Now Publish for Everyone to see')
-            return redirect('post_detail', pk=post.pk)
+            return redirect('post_detail', slug=post.slug)
     else:
         form = PostForm()
         stuff_for_frontend = {'form': form}
@@ -80,8 +82,8 @@ def post_new(request):
 
 
 @login_required
-def post_edit(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def post_edit(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     if request.method == 'POST':
         # updating an existing form
         form = PostForm(request.POST, instance=post)
@@ -91,7 +93,7 @@ def post_edit(request, pk):
             post.edited_date = timezone.now()
             post.save()
             messages.success(request, 'Post Updated')
-            return redirect('post_detail', pk=post.pk)
+            return redirect('post_detail', slug=post.slug)
     else:
         form = PostForm(instance=post)
         stuff_for_frontend = {'form': form, 'post': post}
@@ -108,24 +110,24 @@ def post_draft_list(request):
 
 
 @login_required
-def post_publish(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def post_publish(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     post.publish()
     messages.success(request, 'Post Published Successfully. Everyone can see')
-    return redirect('post_detail', pk=pk)
+    return redirect('post_detail', slug=slug)
 
 
 @login_required
-def post_delete(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def post_delete(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     post.delete()
     messages.success(request, 'Post was Deleted Successfully')
-    return redirect('/', pk=post.pk)
+    return redirect('/', slug=post.slug)
 
 
 @login_required
-def add_comment_to_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def add_comment_to_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     print(post)
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -134,26 +136,26 @@ def add_comment_to_post(request, pk):
             comment.author = request.user
             comment.post = post
             comment.save()
-            return redirect('post_detail', pk=post.pk)
+            return redirect('post_detail', slug=post.slug)
     else:
         form = CommentForm()
         return render(request, 'blog/post_detail.html', {'form': form, 'post': post})
 
 
 @login_required
-def comment_remove(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
+def comment_remove(request, slug):
+    comment = get_object_or_404(Comment, slug=slug)
     comment.delete()
     messages.success(request, 'Comment was Deleted Successfully')
-    return redirect('post_detail', pk=comment.post.pk)
+    return redirect('post_detail', slug=comment.post.slug)
 
 
 @login_required
-def comment_approve(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
+def comment_approve(request, slug):
+    comment = get_object_or_404(Comment, slug=slug)
     comment.approve()
     messages.success(request, 'You Approved the Comment Successfully')
-    return redirect('post_detail', pk=comment.post.pk)
+    return redirect('post_detail', slug=comment.post.slug)
 
 
 def signup(request):
@@ -172,9 +174,9 @@ def signup(request):
 
 def userProfile(request):
     profile = request.user
-    user_pk = User.objects.get(username=profile).pk
+    user_slug = User.objects.get(username=profile).slug
     # user_posts = [Post.objects.get(author=profile)]
-    print(user_pk)
+    print(user_slug)
     # print(user_posts)
 
     return render(request, 'blog/user_profile.html', {'profile': profile})

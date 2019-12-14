@@ -25,7 +25,7 @@
 
 
   <!-- Title -->
-  <a class="text-decoration-none text-dark" href="{% url 'post_detail' pk=post.pk %}"><h1 class="display-4">{{ post.title | truncatechars:30 }}</h1></a>
+  <a class="text-decoration-none text-dark" href="{% url 'post_detail' slug=post.slug %}"><h1 class="display-4">{{ post.title | truncatechars:30 }}</h1></a>
   
   
 
@@ -45,7 +45,7 @@
     {{ post.text |markdown | safe| truncatechars:100| linebreaksbr }}
 
     {% if post.text|length > 200 %}
-    <a href="{%url 'post_detail' pk=post.pk%}">See more</a>
+    <a href="{%url 'post_detail' slug=post.slug%}">See more</a>
   {% endif %}
   </p>
   
@@ -53,7 +53,7 @@
 
   <!--Comment count op a post -->
   <small>
-    <a class="text-info" href="{% url 'post_detail' pk=post.pk%}">Comments: {{ post.approved_comments.count }}</a>
+    <a class="text-info" href="{% url 'post_detail' slug=post.slug%}">Comments: {{ post.approved_comments.count }}</a>
   </small>
   <hr class="my-4">
   {% endfor %}
