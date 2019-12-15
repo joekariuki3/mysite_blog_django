@@ -30,6 +30,7 @@ class Comment(models.Model):
         'blog.Post', on_delete=models.CASCADE, related_name='comments')
     author = models.CharField(max_length=200)
     text = models.TextField()
+    slug = models.SlugField(unique=True, default=secrets.token_hex(15))
     created_date = models.DateTimeField(default=timezone.now)
     approve_date = models.DateTimeField(blank=True, null=True)
     approved = models.BooleanField(default=False)

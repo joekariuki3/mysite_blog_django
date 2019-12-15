@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": "/home/muhoho/.conda/envs/mysite_blog/bin/python",
+  "python.pythonPath": "/home/muhoho/anaconda3/envs/mysite_blog/bin/python",
 
   "files.associations": {
     "**/templates/*.html": "django-html",

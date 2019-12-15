@@ -61,7 +61,6 @@ def post_detail(request, slug):
                           'user_name': user_name}
     return render(request, 'blog/post_detail.html', stuff_for_frontend)
 
-
 @login_required
 def post_new(request):
     if request.method == 'POST':
@@ -79,6 +78,9 @@ def post_new(request):
         stuff_for_frontend = {'form': form}
         messages.info(request, 'Add New Post')
     return render(request, 'blog/post_edit.html', stuff_for_frontend)
+
+
+
 
 
 @login_required
@@ -134,6 +136,7 @@ def add_comment_to_post(request, slug):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.author = request.user
+            comment.slug = str(((comment.text) +" "+secrets.token_hex(15)).replace(" ","-"))
             comment.post = post
             comment.save()
             return redirect('post_detail', slug=post.slug)
@@ -187,4 +190,4 @@ def user_posts(request):
     user_posts = Post.objects.filter(author=user_pk)
     post_count = user_posts.count()
     stuff_for_frontend = {'user_posts': user_posts, 'post_count': post_count, 'user': user}
-    return render(request, 'blog/user_posts.html', stuff_for_frontend )    
+    return render(request, 'blog/user_posts.html', stuff_for_frontend )
