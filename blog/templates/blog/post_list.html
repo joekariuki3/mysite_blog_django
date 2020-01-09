@@ -33,7 +33,7 @@
 
   <!-- Date/Time -->
   <small class="text-muted"> Published on {{ post.published_date }}</small>
-  <hr>
+
 
   <!-- Preview Image 
   <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
@@ -42,7 +42,7 @@
 
   <!-- Post body -->
   <p class="lead" id="post_body" value="{{ post.text}}">
-    {{ post.text |markdown | safe| truncatechars:100| linebreaksbr }}
+    {{ post.text |markdown | safe| truncatechars:300| linebreaksbr }}
 
     {% if post.text|length > 200 %}
     <a href="{%url 'post_detail' pk=post.pk%}">See more</a>

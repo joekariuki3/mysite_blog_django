@@ -40,7 +40,10 @@ def search(request):
     else:
         stuff_for_frontend = {'posts': posts}
         post_found = str(search_result.count())
-        messages.success(request, 'About '+post_found+' results ')
+        if search_result.count() == 1:
+            messages.success(request, 'About '+post_found+' result ')
+        else:
+            messages.success(request, 'About '+post_found+' results ')
         return render(request, 'blog/post_list.html', stuff_for_frontend)
 
 

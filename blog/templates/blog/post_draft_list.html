@@ -9,10 +9,10 @@
             <div class="post">
                 <div class="date">
                     <p>Created : {{ post.created_date }}</p>
-                    <p> Published : {{ post.published_date }}</p>
                 </div>
-                <h1> <a href="{% url 'post_detail' pk=post.pk %}"> {{ post.title }} </a> </h1>
-                <p> {{ post.text | truncatechars:50}} </p>
+                <a class="text-decoration-none text-dark" href="{% url 'post_detail' pk=post.pk %}"><h1 class="display-4">{{ post.title | truncatechars:30 }}</h1></a>
+                <p> {{ post.text | truncatechars:300| linebreaksbr }} </p>
+                <hr>
             </div>
         {% endfor %}
          {% else %}
