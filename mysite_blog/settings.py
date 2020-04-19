@@ -21,8 +21,7 @@ DEBUG = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'  
 
-ALLOWED_HOSTS = ['*',
-                 ]
+ALLOWED_HOSTS = ['*']
 LOGIN_URL = '/accounts/login'
 
 
