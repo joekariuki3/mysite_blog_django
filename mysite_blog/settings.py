@@ -21,7 +21,7 @@ DEBUG = False
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'  
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'mysterious-dusk-29376.herokuapp.com']
 
 LOGIN_URL = '/accounts/login'
 
