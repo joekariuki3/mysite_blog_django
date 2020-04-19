@@ -1,5 +1,7 @@
 
 import os
+import django_heroku 
+
 
 from django.contrib.messages import constants as messages
 
@@ -143,3 +145,4 @@ MIDDLEWARE_CLASSES = (
     ...
 )
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+django_heroku.settings(locals())
