@@ -17,10 +17,10 @@ SECRET_KEY = 'qk30b6=w11xzv-g)e&9ws(j%o)1_llbj@z_w^-*^n)kf^fa8xx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'  
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 ALLOWED_HOSTS = ['52832ccb.ngrok.io',
-                 '127.0.0.1',
+                 '127.0.0.1','joekariuki3.pythonanywhere.com'
                  ]
 LOGIN_URL = '/accounts/login'
 
@@ -125,6 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
+STATIC_ROOT = '/home/joekariuki3/mysite_blog_django/blog/static'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 MESSAGE_TAGS = {

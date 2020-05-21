@@ -25,31 +25,32 @@
 
 
   <!-- Title -->
-  <a class="text-decoration-none text-dark" href="{% url 'post_detail' pk=post.pk %}"><h1 class="display-4">{{ post.title | truncatechars:30 }}</h1></a>
-  
-  
+  <a class="text-decoration-none text-dark" href="{% url 'post_detail' pk=post.pk %}"><p class="h4">{{ post.title | truncatechars:30 }}</p></a>
+
+
 
 
 
   <!-- Date/Time -->
-  <small class="text-muted"> Published on {{ post.published_date }}</small>
-  <hr>
+  <small class="text-muted">{{ post.published_date | timesince}} ago</small>
 
-  <!-- Preview Image 
+  <!-- Preview Image
   <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
   <hr>
   -->
 
   <!-- Post body -->
+  <div>
   <p class="lead" id="post_body" value="{{ post.text}}">
-    {{ post.text |markdown | safe| truncatechars:100| linebreaksbr }}
+    {{ post.text |markdown | safe| truncatechars:500| linebreaks }}
 
     {% if post.text|length > 200 %}
-    <a href="{%url 'post_detail' pk=post.pk%}">See more</a>
+    <a href="{%url 'post_detail' pk=post.pk%}">Continue reading</a>
   {% endif %}
   </p>
-  
-  
+  </div>
+
+
 
   <!--Comment count op a post -->
   <small>
@@ -58,12 +59,12 @@
   <hr class="my-4">
   {% endfor %}
   {% endif %}
- 
+
 </div>
 
 <div class="col-xs-12 col-sm-6 col-md-4 text-center">
   <i class="fas fa-code"></i>
   <h3>HTML5</h3>
   <P>Build with the latest version of HTML</P>
-</div> 
+</div>
 {% endblock %}

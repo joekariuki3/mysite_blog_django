@@ -11,7 +11,7 @@ from .forms import PostForm, CommentForm, UserForm
 from .models import Post, Comment
 from django.db.models import Q
 from django.contrib.auth.models import User
-# Create your views here.
+
 
 
 def post_list(request):
