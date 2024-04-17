@@ -19,8 +19,9 @@ DEBUG = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-ALLOWED_HOSTS = ['52832ccb.ngrok.io',
-                 '127.0.0.1','joekariuki3.pythonanywhere.com'
+ALLOWED_HOSTS = ['127.0.0.1',
+                 'joekariuki3.pythonanywhere.com',
+                 '*'
                  ]
 LOGIN_URL = '/accounts/login'
 
