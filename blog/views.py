@@ -292,7 +292,7 @@ def userProfile(request):
     profile = request.user
     user_pk = User.objects.get(username=profile).pk
     try:
-        user_posts = [Post.objects.get(author=user_pk)]
+        user_posts = Post.objects.filter(author=user_pk).all()
     except Post.DoesNotExist:
         user_posts = []
     return render(request, 'blog/user_profile.html', {'profile': profile, 'user_posts': user_posts })
