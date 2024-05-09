@@ -19,10 +19,7 @@ DEBUG = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-ALLOWED_HOSTS = ['127.0.0.1',
-                 'joekariuki3.pythonanywhere.com',
-                 '*'
-                 ]
+ALLOWED_HOSTS = ['*']
 LOGIN_URL = '/accounts/login'
 
 
