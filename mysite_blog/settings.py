@@ -1,8 +1,8 @@
-
+from dotenv import load_dotenv
 import os
 
 from django.contrib.messages import constants as messages
-
+load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,7 +26,16 @@ LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = 'post_list'
 LOGOUT_REDIRECT_URL = 'post_list'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# console email
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# SMTP configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('User_Email')
+EMAIL_HOST_PASSWORD = os.environ.get('User_Password')
 
 
 # Application definition
