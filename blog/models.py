@@ -8,6 +8,7 @@ class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=60)
     text = models.TextField()
+    image = models.ImageField(upload_to='images', null=True)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
     edited_date = models.DateTimeField(blank=True, null=True)
