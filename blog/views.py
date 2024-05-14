@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib import messages
-import time
+import time, os
 from django.http import HttpResponse
 
 from .forms import PostForm, CommentForm, UserForm
@@ -97,19 +97,21 @@ def post_new(request):
     If the request method is not 'POST', it initializes a new form for creating a post and provides necessary information for rendering the post edit page.
     """
     if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            messages.info(
+        form = PostForm(request.POST, request.FILES)
+        if not form.is_valid():
+            messages.error(request, form.errors)
+            return render(request, 'blog/post_edit.html', {'form': form})
+        post = form.save(commit=False)
+        post.author = request.user
+        post.save()
+        messages.info(
                 request, 'Posted as Draft. Now Publish for Everyone to see')
-            return redirect('post_detail', pk=post.pk)
+        return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
         stuff_for_frontend = {'form': form}
         messages.info(request, 'Add New Post')
-    return render(request, 'blog/post_edit.html', stuff_for_frontend)
+        return render(request, 'blog/post_edit.html', stuff_for_frontend)
 
 
 @login_required
@@ -120,16 +122,25 @@ def post_edit(request, pk):
     If the request method is not 'POST', it initializes a form with the existing post data for editing and provides necessary information for rendering the post edit page.
     """
     post = get_object_or_404(Post, pk=pk)
+    old_image_path = post.image.path
     if request.method == 'POST':
         # updating an existing form
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.edited_date = timezone.now()
-            post.save()
-            messages.success(request, 'Post Updated')
-            return redirect('post_detail', pk=post.pk)
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if not form.is_valid():
+            messages.error(request, form.errors)
+            return render(request, 'blog/post_edit.html', {'form': form})
+
+        # Delete the old image
+        if post.image and 'image' in request.FILES:
+            if os.path.exists(old_image_path):
+                os.remove(old_image_path)
+
+        post = form.save(commit=False)
+        post.author = request.user
+        post.edited_date = timezone.now()
+        post.save()
+        messages.success(request, 'Post Updated')
+        return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm(instance=post)
         stuff_for_frontend = {'form': form, 'post': post}
@@ -188,7 +199,11 @@ def post_delete(request, pk):
 
     """
     post = get_object_or_404(Post, pk=pk)
+    old_image_path = post.image.path
     post.delete()
+    # Delete post image
+    if os.path.exists(old_image_path):
+        os.remove(old_image_path)
     messages.success(request, 'Post was Deleted Successfully')
     return redirect('/', pk=post.pk)
 
