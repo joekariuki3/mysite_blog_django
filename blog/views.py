@@ -122,7 +122,9 @@ def post_edit(request, pk):
     If the request method is not 'POST', it initializes a form with the existing post data for editing and provides necessary information for rendering the post edit page.
     """
     post = get_object_or_404(Post, pk=pk)
-    old_image_path = post.image.path
+    old_image_path=''
+    if post.image.path:
+        old_image_path = post.image.path
     if request.method == 'POST':
         # updating an existing form
         form = PostForm(request.POST, request.FILES, instance=post)
@@ -199,10 +201,12 @@ def post_delete(request, pk):
 
     """
     post = get_object_or_404(Post, pk=pk)
-    old_image_path = post.image.path
+    old_image_path = ''
+    if post.image.path:
+        old_image_path = post.image.path
     post.delete()
     # Delete post image
-    if os.path.exists(old_image_path):
+    if old_image_path and os.path.exists(old_image_path):
         os.remove(old_image_path)
     messages.success(request, 'Post was Deleted Successfully')
     return redirect('/', pk=post.pk)
