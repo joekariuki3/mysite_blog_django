@@ -26,6 +26,12 @@ LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = 'post_list'
 LOGOUT_REDIRECT_URL = 'post_list'
 
+# Base url to serve media files
+MEDIA_URL = '/media/'
+
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 # console email
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
