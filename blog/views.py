@@ -76,7 +76,7 @@ def post_detail(request, pk):
     form = CommentForm(request.POST)
     author_name = post.author
     user_name = request.user
-    author_posts = Post.objects.filter(author=author_name)
+    author_posts = Post.objects.filter(author=author_name, post_published=True)
     author_posts_count = str(author_posts.count())
     author_details = User.objects.get(username=author_name)
     stuff_for_frontend = {'post': post, 'form': form,
