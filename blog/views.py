@@ -46,7 +46,6 @@ def search(request):
     search_result = Post.objects.filter(
         title__contains=user_query).order_by('-published_date')
     posts = search_result
-    print(search_result)
     if search_result.count() == 0:
         posts = Post.objects.filter(
             published_date__lte=timezone.now()).order_by('-published_date')
@@ -123,7 +122,7 @@ def post_edit(request, pk):
     """
     post = get_object_or_404(Post, pk=pk)
     old_image_path=''
-    if post.image.path:
+    if post.image:
         old_image_path = post.image.path
     if request.method == 'POST':
         # updating an existing form
@@ -159,8 +158,10 @@ def post_draft_list(request):
     Returns:
         HttpResponse: The rendered 'blog/post_draft_list.html' template with the draft posts.
     """
+    user_name = request.user
+    user_id = User.objects.filter(username=user_name).first().pk
     post = Post.objects.filter(
-        published_date__isnull=True).order_by('-created_date')
+        published_date__isnull=True, author=user_id).order_by('-created_date')
     stuff_for_frontend = {'posts': post}
     return render(request, 'blog/post_draft_list.html', stuff_for_frontend)
 
@@ -202,7 +203,7 @@ def post_delete(request, pk):
     """
     post = get_object_or_404(Post, pk=pk)
     old_image_path = ''
-    if post.image.path:
+    if post.image:
         old_image_path = post.image.path
     post.delete()
     # Delete post image
