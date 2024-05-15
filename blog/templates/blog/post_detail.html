@@ -71,8 +71,8 @@
               {% for author_posts in author_posts %}
               {% if author_posts.published_date %}
               <li>
-                <a class="text-info" href="{% url 'post_detail' pk=author_posts.pk %}">{{author_posts.title |
-                  truncatechars:15}}</a>
+                <a class="text-info" href="{% url 'post_detail' pk=author_posts.pk %}">
+                  {{author_posts.title | truncatechars:15}}</a>
               </li>
               {% endif %}
               {% endfor %}
@@ -93,11 +93,13 @@
     </div>
 
     <!-- image preview -->
+    {% if post.image %}
     <div align="center">
 
       <img class="img-fluid rounded" src="{{ post.image.url}}" alt="">
 
     </div>
+    {% endif %}
 
     <!-- Post body -->
     <div>
