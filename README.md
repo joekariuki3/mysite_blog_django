@@ -40,8 +40,16 @@ To install and set up the Blog Application, follow these steps:
 6. Set up the database:
    - Migrate the database: `python manage.py migrate`
    - Create a superuser: `python manage.py createsuperuser`
-7. Run the development server: `python manage.py runserver`
-8. Access the application in your web browser: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+7. Create a `.env` file in the project root directory with the following variables:
+   ```
+   DATABASE_URL=sqlite:///db.sqlite3
+   ENVIRONMENT='development'
+   User_Email="your_email@example.com"
+   User_Password="your_password_here"
+   ```
+   Replace `"your_email@example.com"` with your actual email address and `"your_password_here"` with your desired password.
+8. Run the development server: `python manage.py runserver`
+9. Access the application in your web browser: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
 ## Usage Instructions
 ### For Writers/Bloggers:
