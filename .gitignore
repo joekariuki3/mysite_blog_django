@@ -11,4 +11,8 @@ db.sqlite3
 *.json
 *.sql
 *.db
-.sh
+.shmedia/
+media/*
+*.sh
+*.vscode/
+*.vscode/*
