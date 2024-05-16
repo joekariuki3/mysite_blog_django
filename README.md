@@ -69,4 +69,4 @@ Contributions are welcome! If you have suggestions, improvements, or bug fixes, 
 ## License
 This project is licensed under the MIT License. If you would like more information, please refer to the LICENSE file in the repository.
 
-Feel free to reach out to the project owner for any queries or suggestions. Enjoy using and contributing to the Blog Application!
+Feel free to reach out to @joekariuki3 project owner for any queries or suggestions. Enjoy using and contributing to the Blog Application!
