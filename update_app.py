@@ -18,7 +18,7 @@ try:
                             text=True, capture_output=True)
 
     # Print the output of the bash script
-    print(f"file_name script output:")
+    print(f"{file_name} script output:")
     print(result.stdout)
 
 except subprocess.CalledProcessError as e:
