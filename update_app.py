@@ -2,20 +2,30 @@ import subprocess
 import sys
 import os
 import stat
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Define the error message for incorrect usage
 error_message = "Usage: update_app.py BASH_SCRIPT_FILE_NAME.sh BRANCH_NAME REPOSITORY_NAME"
 
-# Check if we have the correct number of arguments
-if len(sys.argv) != 4:
+
+# Get the file name, branch name and repository name from environment variables
+environment = os.environ.get('ENVIRONMENT')
+file_name = os.getenv('BASH_SCRIPT_FILE_NAME',
+                      'updateApplication.sh')  # Bash script file
+repository_name = os.environ.get('REPOSITORY_NAME')  # Repository name
+if environment == 'testing':
+    branch_name = os.environ.get(
+        'TESTING_BRANCH_NAME', 'testing')  # Branch name
+else:
+    branch_name = os.environ.get('MAIN_BRANCH_NAME')  # Branch name
+
+# make sure file_name, branch_name and repository_name are provided in the environment file else exit with error and ask user to provide
+if not file_name or not branch_name or not repository_name:
+    print("Error: BASH_SCRIPT_FILE_NAME, BRANCH_NAME and REPOSITORY_NAME environment variables are required.")
     print(error_message)
     sys.exit(1)
-
-
-# Get the arguments from the command line
-file_name = sys.argv[1]  # Bash script file
-branch_name = sys.argv[2]  # Branch name
-repository_name = sys.argv[3]  # Repository name
 
 # Check if the file exists
 if not os.path.isfile(file_name):
