@@ -41,8 +41,8 @@ class ScriptRunner:
 
         file_stat = os.stat(self.file_name)
         if not bool(file_stat.st_mode & stat.S_IXUSR):
-            print(f"'{
-                  self.file_name}' does not have execution rights. Granting execution permission.")
+            print(
+                f"{self.file_name} does not have execution rights. Granting execution permission.")
             os.chmod(self.file_name, file_stat.st_mode | stat.S_IXUSR)
 
     def run_script(self):
