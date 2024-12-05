@@ -78,11 +78,12 @@
               ><i class="fas fa-pencil-alt"> My posts</i>
             </a>
             <div class="dropdown-divider"></div>
-            <a
-              class="nav-link btn-outline-danger text-center"
-              href="{% url 'logout'%}"
-              >Log out</a
-            >
+            <div class="d-flex justify-content-center align-items-center">
+              <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Logout</button>
+              </form>
+            </div>
           </div>
         </li>
       </ul>
