@@ -5,6 +5,7 @@ from django.utils import timezone
 
 
 class Post(models.Model):
+    id = models.BigAutoField(primary_key=True)
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=60)
     text = models.TextField()
@@ -43,6 +44,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
+    id = models.BigAutoField(primary_key=True)
     post = models.ForeignKey(
         'blog.Post', on_delete=models.CASCADE, related_name='comments')
     author = models.CharField(max_length=200)
