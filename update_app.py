@@ -21,6 +21,8 @@ if environment == 'testing':
 else:
     branch_name = os.environ.get('MAIN_BRANCH_NAME')  # Branch name
 
+print(f"Environment: {environment}")
+
 # make sure file_name, branch_name and repository_name are provided in the environment file else exit with error and ask user to provide
 if not file_name or not branch_name or not repository_name:
     print("Error: BASH_SCRIPT_FILE_NAME, BRANCH_NAME and REPOSITORY_NAME environment variables are required.")
