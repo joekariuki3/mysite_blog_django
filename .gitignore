@@ -13,7 +13,7 @@ db.sqlite3
 *.db
 .shmedia/
 media/*
-*.sh
+*deploy*
 *.vscode/
 *.vscode/*
 *.json
